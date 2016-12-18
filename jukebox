@@ -1,0 +1,31 @@
+#!/bin/sh
+
+ASCRIPTDIR=~/share/ascripts
+
+if [ $# -lt 1 ];then
+    echo 'usage: `basename $0` play|stop [computer|living|bedroom|library|bathroom]' >&2
+    exit 1
+fi
+
+CMD="$1"
+TARGET="$2"
+
+if [ "$CMD" = play ];then
+    case "$TARGET" in
+	living)
+	    DEV='リビング（オーディオ）'
+	    ;;
+	bedroom)
+	    DEV='寝室'
+	    ;;
+	*)
+	    DEV='コンピュータ'
+	    ;;
+    esac
+    osascript $ASCRIPTDIR/playMusic.scpt "$DEV"
+elif [ "$CMD" = pause ];then
+    osascript $ASCRIPTDIR/pauseMusic.scpt
+else
+    echo 'syntax error' >&2
+    exit 1
+fi
